@@ -9,7 +9,7 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'customers:detail' customer.id %}" method="post">
+<form action="{% url 'customers:update' customer.id %}" method="post">
 {% csrf_token %}
  <fieldset>
   <legend>Personal Information:</legend>

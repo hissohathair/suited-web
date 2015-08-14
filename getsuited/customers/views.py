@@ -1,17 +1,25 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.core.urlresolvers import reverse
+from django.views import generic
 
 from .models import Customer, Measurement
 
 
-def index(request):
-    latest_customer_list = Customer.objects.order_by('-modified_date')
-    context = { 'latest_customer_list': latest_customer_list }
-    return render(request, 'customers/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'customers/index.html'
+
+    def get_queryset(self):
+        """Return the most recently updated customers."""
+        return Customer.objects.order_by('-modified_date')
 
 
-def detail(request, customer_id):
+class DetailView(generic.DetailView):
+    model = Customer
+    template_name = 'customers/detail.html'
+
+
+def update(request, customer_id):
     customer = get_object_or_404(Customer, pk=customer_id)
 
     details_changed = False
@@ -33,8 +41,3 @@ def detail(request, customer_id):
 
     else:
         return render(request, 'customers/detail.html',  { 'customer': customer })
-
-
-def measurements(request, customer_id):
-    return HttpResponse("You're looking at the measurements for customer %s." % customer_id)
-

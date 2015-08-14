@@ -18,7 +18,8 @@ class Customer(models.Model):
     modified_date = models.DateTimeField('date modified', auto_now=True)
 
     def was_updated_recently(self):
-        return self.modified_date >= timezone.now() - datetime.timedelta(days=3)
+        now = timezone.now()
+        return now - datetime.timedelta(days=3) <= self.modified_date <= now
     was_updated_recently.admin_order_field = 'modified_date'
     was_updated_recently.boolean = True
     was_updated_recently.short_description = 'Updated recently?'
