@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>{{ customer }}</title>
+</head>
+
+<body>
+<h2>{{ customer }}</h2>
+<p><a href="mailto:{{ customer.email_address }}">{{ customer.email_address }}</a></p>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'customers:detail' customer.id %}" method="post">
+{% csrf_token %}
+ <fieldset>
+  <legend>Personal Information:</legend>
+  <div class="form-age">
+    <label for="age">Age:</label>
+    <input type="text" name="age" value="{{ customer.age }}" id="age" size="4" maxlength="3" />
+    
+    <label for="height">Height:</label>
+    <input type="text" name="height" value="{{ customer.height }}" id="height" size="6" maxlength="6" />
+
+    <label for="weight">Weight:</label>
+    <input type="text" name="weight" value="{{ customer.weight }}" id="weight" size="6" maxlength="6" />
+  </div>
+ </fieldset>
+  <input type="submit" value="Save" />
+</form>
+
+
+<table class="measurements">
+</table>
+
+</body>
+</html>

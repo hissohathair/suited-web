@@ -1,0 +1,19 @@
+<html>
+<head>
+  <title>Latest Customers</title>
+</head>
+
+<body>
+{% if latest_customer_list %}
+  <h2>Latest Customers</h2>
+  <p>Customers are listed in order of most recently modified / updated:</p>
+  <ul>
+  {% for customer in latest_customer_list %}
+    <li><a href="{% url 'customers:detail' customer.id %}">{{ customer.first_name }} {{ customer.last_name }}</a></li>
+  {% endfor %}
+  </ul>
+{% else %}
+  <p>No customers are available.</p>
+{% endif %}
+</body>
+</html>
