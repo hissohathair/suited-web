@@ -2,6 +2,9 @@
 *.pyc
 *.sqlite3
 
+# Editor files
+*~
+
 # VirtualEnv
 /python
 /scratch

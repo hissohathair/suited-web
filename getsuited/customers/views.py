@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 
 from .models import Customer, Measurement
+from .forms import CustomerForm
 
 
 class IndexView(generic.ListView):

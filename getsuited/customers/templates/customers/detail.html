@@ -1,35 +1,72 @@
-<html>
-<head>
+{% extends 'customers/base.html' %}
+{% block header %}
   <title>{{ customer }}</title>
-</head>
+{% endblock %}
 
-<body>
-<h2>{{ customer }}</h2>
-<p><a href="mailto:{{ customer.email_address }}">{{ customer.email_address }}</a></p>
+{% block contextmenu %}
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">View Orders</a></li>
+                <li><a href="#">Measure Up</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Caution!</li>
+                <li><a href="#">Delete</a></li>
+              </ul>
+            </li>
+{% endblock %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-<form action="{% url 'customers:update' customer.id %}" method="post">
-{% csrf_token %}
- <fieldset>
-  <legend>Personal Information:</legend>
-  <div class="form-age">
-    <label for="age">Age:</label>
-    <input type="text" name="age" value="{{ customer.age }}" id="age" size="4" maxlength="3" />
-    
-    <label for="height">Height:</label>
-    <input type="text" name="height" value="{{ customer.height }}" id="height" size="6" maxlength="6" />
-
-    <label for="weight">Weight:</label>
-    <input type="text" name="weight" value="{{ customer.weight }}" id="weight" size="6" maxlength="6" />
+{% block content %}
+  <div class="jumbotron">
+    <h2>{{ customer }}</h2>
+    <p>{{ customer.first_name }} has been a customer since {{ customer.created_date }}</p>
+    <p><a href="mailto:{{ customer.email_address }}">{{ customer.email_address }}</a></p>
   </div>
- </fieldset>
-  <input type="submit" value="Save" />
-</form>
+
+  <div class="page-header">
+    <h1>{{ customer.first_name }}'s details</h1>
+  </div>
+
+{% if error_message %}
+  <div class="alert alert-warning" role="alert">
+    <strong>Alert!</strong> {{ error_message }}
+  </div>
+{% endif %}
 
 
-<table class="measurements">
-</table>
+  <form action="{% url 'customers:update' customer.id %}" method="post">
+    {% csrf_token %}
+    <fieldset>
+      <legend>Personal Information:</legend>
+      <div class="row">
+	<div class="col-md-6">
+	  <label for="first_name">First Name:</label>
+	  <input type="text" name="first_name" value="{{ customer.first_name }}" id="first_name" size="30" maxlength="100" />
+	</div>
+	<div class="col-md-6">
+	  <label for="last_name">Last Name:</label>
+	  <input type="text" name="last_name" value="{{ customer.last_name }}" id="last_name" size="30" maxlength="100" />
+	</div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+	  <label for="age">Age:</label>
+	  <input type="text" name="age" value="{{ customer.age }}" id="age" size="4" maxlength="3" />
+	</div>
+        <div class="col-md-4">
+	  <label for="height">Height:</label>
+	  <input type="text" name="height" value="{{ customer.height }}" id="height" size="6" maxlength="6" />
+	</div>
+        <div class="col-md-4">
+	  <label for="weight">Weight:</label>
+	  <input type="text" name="weight" value="{{ customer.weight }}" id="weight" size="6" maxlength="6" />
+	</div>
+      </div>
+    </fieldset>
+    <div class="row">
+      <p><br/><input type="submit" value="Save" class="btn btn-lg btn-primary"/></p>
+    </div>
+  </form>
 
-</body>
-</html>
+{% endblock %}
+

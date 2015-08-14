@@ -1,5 +1,7 @@
 # Object files
 *.pyc
+*.sqlite3
 
 # VirtualEnv
 /python
+/scratch
