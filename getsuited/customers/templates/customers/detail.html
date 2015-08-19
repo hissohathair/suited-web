@@ -1,4 +1,5 @@
 {% extends 'customers/base.html' %}
+
 {% block header %}
   <title>{{ customer }}</title>
 {% endblock %}
@@ -25,48 +26,15 @@
 
   <div class="page-header">
     <h1>{{ customer.first_name }}'s details</h1>
+    <a href="{% url 'customers:update' customer.pk %}">Edit {{ customer.first_name }}</a>
   </div>
 
-{% if error_message %}
-  <div class="alert alert-warning" role="alert">
-    <strong>Alert!</strong> {{ error_message }}
+  <div class="row">
+    <div class="col-md-4">Age: {{ customer.age }}</div>
+    <div class="col-md-4">Height: {{ customer.height }}</div>
+    <div class="col-md-4">Weight: {{ customer.weight }}</div>
   </div>
-{% endif %}
 
-
-  <form action="{% url 'customers:update' customer.id %}" method="post">
-    {% csrf_token %}
-    <fieldset>
-      <legend>Personal Information:</legend>
-      <div class="row">
-	<div class="col-md-6">
-	  <label for="first_name">First Name:</label>
-	  <input type="text" name="first_name" value="{{ customer.first_name }}" id="first_name" size="30" maxlength="100" />
-	</div>
-	<div class="col-md-6">
-	  <label for="last_name">Last Name:</label>
-	  <input type="text" name="last_name" value="{{ customer.last_name }}" id="last_name" size="30" maxlength="100" />
-	</div>
-      </div>
-      <div class="row">
-        <div class="col-md-4">
-	  <label for="age">Age:</label>
-	  <input type="text" name="age" value="{{ customer.age }}" id="age" size="4" maxlength="3" />
-	</div>
-        <div class="col-md-4">
-	  <label for="height">Height:</label>
-	  <input type="text" name="height" value="{{ customer.height }}" id="height" size="6" maxlength="6" />
-	</div>
-        <div class="col-md-4">
-	  <label for="weight">Weight:</label>
-	  <input type="text" name="weight" value="{{ customer.weight }}" id="weight" size="6" maxlength="6" />
-	</div>
-      </div>
-    </fieldset>
-    <div class="row">
-      <p><br/><input type="submit" value="Save" class="btn btn-lg btn-primary"/></p>
-    </div>
-  </form>
 
 {% endblock %}
 

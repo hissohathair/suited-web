@@ -1,5 +1,6 @@
 import datetime
 
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from django.db import models
 
@@ -26,6 +27,10 @@ class Customer(models.Model):
 
     def __str__(self):
         return "{0} {1} (#{2})".format(self.first_name, self.last_name, self.id)
+
+
+    def get_absolute_url(self):
+        return reverse('customers:detail', kwargs={'pk': self.pk})
 
 
 class Measurement(models.Model):

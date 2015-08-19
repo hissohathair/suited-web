@@ -6,6 +6,7 @@
 {% block content %}
   <div class="page-header">
     <h1>Latest Customers</h1>
+    <p><a href="{% url 'customers:create' %}">Create New Customer</a></p>
   </div>
    
   {% if customer_list %}
@@ -29,7 +30,11 @@
           <td>{{ customer.last_name }}</td>
           <td><a href="mailto:{{ customer.email_address}}">{{ customer.email_address }}</a></td>
 	  <td>{{ customer.modified_date }}</td>
-	  <td><a href="{% url 'customers:detail' customer.id %}">View</a></td>
+	  <td>
+	    <a href="{% url 'customers:detail' customer.id %}">View</a> |
+	    <a href="{% url 'customers:update' customer.id %}">Edit</a> |
+	    <a href="{% url 'customers:delete' customer.id %}">Delete</a>
+	  </td>
         </tr>
       {% endfor %}
       </tbody>

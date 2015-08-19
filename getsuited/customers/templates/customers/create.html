@@ -1,0 +1,16 @@
+{% extends 'customers/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="page-header">
+      <h1>Create New Customer</h1>
+    </div>
+
+    <div class="well">
+      {% crispy form %}
+    </div>
+  </div>
+</div>
+{% endblock %}
