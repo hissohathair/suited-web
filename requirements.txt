@@ -1,5 +1,6 @@
 django==1.8.3
-django-crispy-forms==1.4.0
+django-crispy-forms
+django-allauth
 #django-extensions
 #django-uni-form
 #requests
