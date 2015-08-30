@@ -4,8 +4,9 @@
 
 # Editor files
 *~
-setup_env.sh
 
-# VirtualEnv
+# VirtualEnv and project specific
+setup_env.sh
 /python
 /scratch
+/static

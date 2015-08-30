@@ -18,4 +18,4 @@ export SECRET_KEY='_vt3ghed83@3i2$-cm5xdj$)i$7h+q@!_m3*y+je^#28)bwqqy'
 # Stripe keys
 #
 export STRIPE_PUBLISHABLE_KEY='[TODO]'
-export STRIPE_SECRET_KEY='[TODO']
+export STRIPE_SECRET_KEY='[TODO]'
