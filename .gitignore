@@ -4,6 +4,7 @@
 
 # Editor files
 *~
+setup_env.sh
 
 # VirtualEnv
 /python

@@ -1,8 +1,14 @@
 import datetime
 
 from django.core.urlresolvers import reverse
-from django.utils import timezone
+from django.conf import settings
 from django.db import models
+from django.utils import timezone
+
+from allauth.account.signals import user_logged_in, user_signed_up
+import stripe
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 # Create your models here.
 
@@ -10,6 +16,8 @@ class Customer(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email_address = models.EmailField(blank=True)
+
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, null=True, blank=True)
 
     age = models.PositiveSmallIntegerField(blank=True, null=True)
     height = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
@@ -31,6 +39,17 @@ class Customer(models.Model):
 
     def get_absolute_url(self):
         return reverse('customers:detail', kwargs={'pk': self.pk})
+
+
+class UserStripe(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    stripe_id = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        if self.stripe_id:
+            return str(self.stripe_id)
+        else:
+            return self.user.username
 
 
 class Measurement(models.Model):
@@ -60,3 +79,31 @@ class Measurement(models.Model):
 
     def __str__(self):
         return "{0}'s measurements".format(self.customer.first_name)
+
+
+def stripe_callback(sender, request, user, **kwargs):
+    stripe_user_account, created = UserStripe.objects.get_or_create(user=user)
+    if created:
+        print("Created for %s" % user.username)
+    else:
+        print("Fetched for %s" % user.username)
+
+    if stripe_user_account.stripe_id is None or stripe_user_account.stripe_id == '':
+        print("Creating new stripe customer...")
+        new_stripe_id = stripe.Customer.create(email=user.email)
+        stripe_user_account.stripe_id = new_stripe_id['id']
+        stripe_user_account.save()
+    else:
+        print("Stripe customer already exists: %s" % stripe_user_account.stripe_id)
+
+def customer_callback(sender, request, user, **kwargs):
+    customer, created = Customer.objects.get_or_create(user=user)
+    if created:
+        print("Created Customer for %s" % user.username)
+    else:
+        print("Fetched Customer for %s" % user.username)
+
+user_logged_in.connect(stripe_callback)
+user_signed_up.connect(stripe_callback)
+user_signed_up.connect(customer_callback)
+

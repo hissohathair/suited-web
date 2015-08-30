@@ -20,10 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '_vt3ghed83@3i2$-cm5xdj$)i$7h+q@!_m3*y+je^#28)bwqqy'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.environ.get('DJANGO_DEBUG') == '1')
 
 ALLOWED_HOSTS = []
 
@@ -38,7 +38,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'customers',
+    'checkout',
     'crispy_forms',
+    'stripe',
 
     # django-allauth
     'django.contrib.sites',
@@ -70,6 +72,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.media",
     "django.core.context_processors.static",
     "django.core.context_processors.tz",
+    "django.core.context_processors.csrf",
     "django.contrib.messages.context_processors.messages",
     "django.core.context_processors.request",
     "allauth.account.context_processors.account",
@@ -173,4 +176,9 @@ STATIC_URL = '/static/'
 # Crispy Forms
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Stripe
+
+STRIPE_PUBLISHABLE_KEY = os.environ.get('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = os.environ.get('STRIPE_SECRET_KEY')
 

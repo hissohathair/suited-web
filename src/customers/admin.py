@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Customer, Measurement
+from .models import Customer, Measurement, UserStripe
 
 # Register your models here.
 
@@ -10,7 +10,7 @@ class MeasurementInline(admin.StackedInline):
 
 class CustomerAdmin(admin.ModelAdmin):
     fieldsets = [
-        ('Name',   {'fields': ['first_name', 'last_name', 'email_address']}),
+        ('Name',   {'fields': ['first_name', 'last_name', 'email_address', 'user']}),
         ('Stats',  {'fields': ['age', 'height', 'weight'], 'classes': ['collapse']}),
     ]
     inlines = [MeasurementInline]
@@ -18,5 +18,11 @@ class CustomerAdmin(admin.ModelAdmin):
     #list_filter = ['modified_date']
     search_fields = ['first_name', 'last_name']
 
+class UserStripeAdmin(admin.ModelAdmin):
+    class Meta:
+        model = UserStripe
+
 admin.site.register(Customer, CustomerAdmin)
+admin.site.register(UserStripe, UserStripeAdmin)
+
 
