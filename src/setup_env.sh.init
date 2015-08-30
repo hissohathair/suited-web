@@ -1,0 +1,21 @@
+# usage: source setup_env.sh
+#
+# This file MUST NOT be checked into source repository -- it has
+# secret keys in it.
+#
+
+# Debug. Set to "1" for test/dev.
+#
+export DJANGO_DEBUG=0
+
+
+# Django key. Key beginning "_vt3ghed" ending "bwqqy" is only
+# for test/dev.
+#
+export SECRET_KEY='_vt3ghed83@3i2$-cm5xdj$)i$7h+q@!_m3*y+je^#28)bwqqy'
+
+
+# Stripe keys
+#
+export STRIPE_PUBLISHABLE_KEY='[TODO]'
+export STRIPE_SECRET_KEY='[TODO']
