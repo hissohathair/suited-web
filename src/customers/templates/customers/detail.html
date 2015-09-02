@@ -18,23 +18,78 @@
 {% endblock %}
 
 {% block content %}
-  <div class="jumbotron">
-    <h2>{{ customer }}</h2>
-    <p>{{ customer.first_name }} has been a customer since {{ customer.created_date }}</p>
-    <p><a href="mailto:{{ customer.email_address }}">{{ customer.email_address }}</a></p>
-  </div>
+  <div class="row">
+    <div class="page-header col-md-6">
+      <h1>{{ customer.first_name }}'s details</h1>
+      <a href="{% url 'customers:update' customer.pk %}">Edit {{ customer.first_name }}</a>
+    </div>
 
-  <div class="page-header">
-    <h1>{{ customer.first_name }}'s details</h1>
-    <a href="{% url 'customers:update' customer.pk %}">Edit {{ customer.first_name }}</a>
+    <div class="col-md-6">
+      <table class="table table-bordered">
+	<tbody>
+	  <tr><td>Customer</td><td>{{ customer.first_name }} {{ customer.last_name }}</td></tr>
+	  <tr><td>Address</td><td></td></tr>
+	  <tr><td>Contact Number</td><td>{{ customer.phone_number }}</td></tr>
+	  <tr><td>Email</td><td>{{ customer.email_address }}</td></tr>
+	</tbody>
+      </table>
+    </div>
   </div>
 
   <div class="row">
-    <div class="col-md-4">Age: {{ customer.age }}</div>
-    <div class="col-md-4">Height: {{ customer.height }}</div>
-    <div class="col-md-4">Weight: {{ customer.weight }}</div>
+    <div class="col-md-12">
+      <table class="table table-bordered">
+	<tbody>
+	  <tr>
+	    <td>Age</td><td>อาย</td><td>{{ customer.age }}</td>
+	    <td>Height</td><td>นํ้าห</td><td>{{ customer.height }}</td>
+	    <td>Weight</td><td>นํ้าหนัก</td><td>{{ customer.weight }}</td>
+	  </tr>
+	</tbody>
+      </table>
+    </div>
   </div>
 
+  <div class="page-header">
+    <h2>Suit</h2>
+    <div class="row">
+      <div class="col-md-6">
+	<table class="table table-bordered">
+	  <thead>
+	    <tr>
+	      <th>English</th>
+	      <th>Thai</th>
+	      <th>Inches</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>Shoulder-neck-shoulder</td>
+	      <td>ไหล</td>
+	      <td>{{ customer.current_measurements.shoulder_neck_shoulder }}</td>
+	    </tr>
+	    <tr>
+	      <td>Top of shoulder to wrist crease</td>
+	      <td></td>
+	      <td>{{ customer.current_measurements.top_of_shoulder_to_wrist }}</td>
+	    </tr>
+	    <tr>
+	      <td>Bicep under armpit</td>
+	      <td></td>
+	      <td>{{ customer.current_measurements.bicep_under_armput }}</td>
+	    </tr>
+	    <tr>
+	      <td>Mid shoulder</td>
+	      <td></td>
+	      <td>{{ customer.current_measurements.mid_shoulder }}</td>
+	    </tr>
+	    <tr>
+	    </tr>
+	  </tbody>
+	</table>
+      </div>
+    </div>
+  </div>
 
 {% endblock %}
 

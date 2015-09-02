@@ -9,7 +9,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 @login_required
 def checkout(request):
     publish_key = settings.STRIPE_PUBLISHABLE_KEY
-    customer_id = request.user.userstripe.stripe_id
+    customer_id = request.user.customer.get_or_create_stripe_account()
     if request.method == 'POST':
         token = request.POST['stripeToken']
 

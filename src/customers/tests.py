@@ -3,10 +3,21 @@ import datetime
 from django.utils import timezone
 from django.test import TestCase
 
-from .models import Customer
+from .models import Customer, Measurement
 
 
 class CustomerMethodTests(TestCase):
+
+    def test_created_customer_has_measurents(self):
+        """
+        current_measurements() should return a new measurement record for
+        a new customer.
+        """
+        c = Customer(first_name="test", last_name="test")
+        c.save()
+        m = c.current_measurements()
+        self.assertTrue(isinstance(m, Measurement))
+
 
     def test_was_updated_recently_future_date(self):
         """
