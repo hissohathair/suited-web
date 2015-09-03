@@ -23,32 +23,37 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.environ.get('DJANGO_DEBUG') == '1')
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
 
 # Application definition
 
-INSTALLED_APPS = (
+PREREQ_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'customers',
-    'checkout',
-    'crispy_forms',
-    'stripe',
-
     # django-allauth
     'django.contrib.sites',
+
+    'crispy_forms',
+    'stripe',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
 #    'allauth.socialaccount.providers.google',
-)
+]
+
+PROJECT_APPS = [
+    'customers',
+    'checkout',
+]
+
+INSTALLED_APPS = PREREQ_APPS + PROJECT_APPS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
